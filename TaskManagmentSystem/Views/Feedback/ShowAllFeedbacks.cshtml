@@ -1,0 +1,9 @@
+﻿@using TaskManagmentSystem.Domain.Entity;
+@model List<Feedback>
+
+<h2>Получить всю обратную связь</h2>
+
+@foreach (Feedback fb in Model)
+{
+	<p>@fb.Name write "@fb.Message" at @fb.BornTime.ToString() .</p>
+}

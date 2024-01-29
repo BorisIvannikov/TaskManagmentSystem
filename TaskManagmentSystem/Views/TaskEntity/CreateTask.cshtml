@@ -1,0 +1,41 @@
+﻿@using TaskManagmentSystem.Domain.Enums;
+@using TaskManagmentSystem.Domain.Entity;
+@using TaskManagmentSystem.Domain.ViewModels;
+@model TaskEntityViewModel
+
+<h2 class="mb-3 text-muted">Создание задачи</h2>
+
+<body>
+    <form method="post" asp-controller="TaskEntity" asp-action="Check">
+        
+            <label class="form-label">Тема задачи</label>
+            <input name="Subject" type="text" class="form-control"/>
+            <span asp-validation-for="Subject"></span>
+        
+            <label class="form-label">Описание задачи</label>
+            <textarea name="Description" type="text" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description"></span>
+        
+        <label class="form-label">Приоритет задачи</label>
+        <select name="Priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    
+        <label class="form-label">Получатель</label>
+        <select name="RecipientID" class="form-select mb-3">
+            <option value="">Выберите получателя</option>
+            @foreach (var user in ViewBag.Users)
+            {
+                <option value="@user.UserEntityId">@user.Name : @user.Position.ToString()</option>
+            }
+        </select>
+        <span asp-validation-for="RecipientID"></span>
+        <button id="createTask" class="btn btn-primary">Создать</button>
+
+        @if (TempData["ConfirmationMessage"] != null)
+        {
+            <div class="alert" role="alert">
+                @TempData["ConfirmationMessage"]
+            </div>
+        }    
+    </form>
+</body>
+<p></p>

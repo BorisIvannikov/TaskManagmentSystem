@@ -1,0 +1,86 @@
+﻿@using TaskManagmentSystem.Domain.Entity;
+
+@model Feedback
+
+@{
+    ViewData["Title"] = "Обратная связь";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+
+        .form-container {
+            width: 33.33%;
+            max-width: 400px; /* Опционально, чтобы ограничить максимальную ширину */
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-textarea {
+            resize: vertical;
+        }
+
+        .alert {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+   
+</head>
+<h2>Обратная Связь</h2>
+<body>
+    <div class="form-container">
+        <form method="post" asp-controller="Feedback" asp-action="Check">
+            <label class="form-label" asp-for="Name"></label>
+            @if(ViewBag.Name!=null)
+            {
+                <input class="form-input" asp-for="Name" value="@ViewBag.Name" />
+            }
+            @if (ViewBag.Name == null)
+            {
+                <input class="form-input" asp-for="Name" />
+            }
+            <span asp-validation-for="Name"></span>
+            <p></p>
+            <label class="form-label" asp-for="Message"></label>
+            <p></p>
+            <textarea class="form-textarea" asp-for="Message"></textarea>
+            <span asp-validation-for="Message"></span>
+            <p></p>
+
+            @if (ViewData["ConfirmationMessage"] != null)
+            {
+                <div class="alert" role="alert">
+                    @ViewData["ConfirmationMessage"]
+                </div>
+            }
+
+            <input type="submit" value="Отправить" />
+        </form>
+    </div>
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <div>
+            <p></p>
+            <form method="post" action="@Url.Action("ShowAllFeedbacks", "Feedback")">
+                <input type="submit" value="Запросы" />
+            </form>
+        </div>
+    }
+    
+</body>

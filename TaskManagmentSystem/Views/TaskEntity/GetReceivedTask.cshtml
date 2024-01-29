@@ -1,0 +1,63 @@
+﻿@using TaskManagmentSystem.Domain.Entity;
+@model List<TaskEntity>
+
+<h2>Входящие задачи</h2>
+
+<p></p>
+<div>
+    <table class="table table-dark table-hover" name="TaskEntityTable">
+        <thead>
+            <tr>
+                <th>Время</th>
+                <th>Тема</th>
+                <th>Описание</th>
+                <th>Приоритет</th>
+                <th>Инициатор</th>
+                <th>Получатель</th>
+                <th>Выполнение</th>
+                <th>Выполнить</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div>
+                @if (Model != null)
+                {
+                    @foreach (var task in Model)
+                    {
+                        <tr>
+                            <td>@task.BornDateTime.ToString()</td>
+                            <td>@task.Subject</td>
+                            <td>@task.Description</td>
+                            <td>@task.Priority.ToString()</td>
+                            <td>@task.Initiator.Name</td>
+                            <td>@task.Recipient.Name</td>
+                            <td>@task.IsDone</td>                        
+                            <td>
+                                @if (!task.IsDone)
+                                {
+                                    <form asp-controller="TaskEntity" asp-action="PerformATask" method="post">
+                                        <input type="hidden" name="id" value="@task.TaskEntityId" />
+                                        <button type="submit">Выполнить</button>
+                                    </form>                                
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+
+    </table>
+</div>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script>
+        let dataTable = new DataTable('#TaskEntityTable'){
+            info: true,
+            serverSide: true,
+            searching: true,
+            paging: true
+                        }
+    </script>
+}

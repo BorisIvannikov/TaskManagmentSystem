@@ -1,0 +1,66 @@
+﻿@using TaskManagmentSystem.Domain.ViewModels;
+@model LoginViewModel
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        .form-container {
+            width: 33.33%;
+            max-width: 400px; /* Опционально, чтобы ограничить максимальную ширину */
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-textarea {
+            resize: vertical;
+        }
+
+        .alert {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<h2>Авторизироваться в системе</h2>
+<body>
+    <form method="post" asp-controller="UserEntityProfile" asp-action="Login">
+        
+        <label class="form-label">Введите Login</label>
+        <input name="Login" type="text" placeholder="Login" class="form-control" />
+        <span asp-validation-for="Login"></span>
+        <p></p>
+
+        <div class="form-group">
+            <label class="form-label">Введите Пароль</label>
+            <input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="form-control textbox-dg font-weight-bold text-left" type="password">
+            <span asp-validation-for="Password"></span>
+        </div>
+
+        <p></p>
+
+        <button id="create" class="btn btn-primary">Вход</button>
+
+    </form>
+    @if (TempData["ConfirmationMessage"] != null)
+    {
+        <div class="alert" role="alert">
+            @TempData["ConfirmationMessage"]
+        </div>
+    }
+
+</body>

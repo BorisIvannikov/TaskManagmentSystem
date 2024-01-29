@@ -1,0 +1,34 @@
+﻿@using TaskManagmentSystem.Domain.ViewModels;
+@model DepartmentViewModel
+
+
+
+<body>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Создать отдел</h4>
+            <p></p>
+            <form method="post" asp-controller="Department" asp-action="Create">
+                <label class="form-label">Название</label>
+                <input name="Name" type="text" class="form-control" />
+                <p></p>
+                <button id="createTask" class="btn btn-primary">Создать</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Список отделов</h4>
+            <p></p>
+
+            @if (ViewBag.Departments != null)
+            {
+                <select name="Dep" class="form-select mb-3">
+                    <option value="">Выберите Отдел</option>
+                    @foreach (var dep in ViewBag.Departments)
+                    {
+                        <option value="@dep.DepartmentId">@dep.Name</option>
+                    }
+                </select>
+            }
+        </div>
+    </div>
+</body>

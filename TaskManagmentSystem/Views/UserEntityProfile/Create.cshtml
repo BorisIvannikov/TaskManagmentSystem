@@ -1,0 +1,77 @@
+﻿@using TaskManagmentSystem.Domain.Enums;
+@using TaskManagmentSystem.Domain.ViewModels;
+@model UserEntityProfileViewModel
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+
+        .form-container {
+            width: 33.33%;
+            max-width: 400px; /* Опционально, чтобы ограничить максимальную ширину */
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-textarea {
+            resize: vertical;
+        }
+
+        .alert {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<h2>Создание нового пользователя</h2>
+<p></p>
+<body>
+    <form method="post" asp-controller="UserEntityProfile" asp-action="Check">
+        <label class="form-label">Введите имя</label>
+        <input name="Name" type="text" class="form-control" />
+        <span asp-validation-for="Name"></span>
+
+        <label class="form-label">Роль Пользователя</label>
+        <select name="Position" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Position>()"></select>
+
+        @if (ViewBag.Departments != null)
+        {
+            
+        }
+
+        <label class="form-label">Введите Логин</label>
+        <input name="Login" type="text" class="form-control" />
+        <span asp-validation-for="Login"></span>
+
+        <label class="form-label">Введите Пароль</label>
+        <input name="Password" type="text" class="form-control" />
+        <span asp-validation-for="Password"></span>
+        
+        <p></p>
+        
+        <button id="Login" class="btn btn-primary">Создать</button>
+
+        <p></p>
+
+        @if (TempData["ConfirmationMessage"] != null)
+        {
+            <div class="alert" role="alert">
+                @TempData["ConfirmationMessage"]
+            </div>
+        }
+    </form>
+</body>
